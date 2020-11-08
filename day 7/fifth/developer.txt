@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace PracticeLib
+{
+    public class Account
+    {
+        static int getId;
+        int id;
+        string name;
+        double balanceAmt;
+        
+
+        public Account(string name, double balanceAmt)
+        {
+            id = ++getId;
+            this.name = name;
+            this.balanceAmt = balanceAmt;
+        }
+        public void deposit(double amt)
+        {
+                balanceAmt = balanceAmt + amt;
+        }
+        public void withdraw(double amt)
+        {
+            if (amt > balanceAmt)
+                throw new Exception("not enough balance");
+            else
+                balanceAmt = balanceAmt - amt;
+        }
+        public void display()
+        {
+            Console.WriteLine("name={0}, balance={1}", name, balanceAmt);
+        }
+
+    }
+}

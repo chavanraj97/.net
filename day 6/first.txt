@@ -1,0 +1,36 @@
+using System;
+namespace ConsoleApplicationDemo
+{
+    class myclass
+    {    //public instance method - you can call this method through object of this class
+        
+    }
+    class Program //Entry point class
+    {
+        static void Main(string[] args)
+        {
+            int[,] arr = new int[3, 3];
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    int b;
+                    string a = Console.ReadLine();
+                    if (int.TryParse(a, out b))
+                        arr[i,j] = b;
+                }
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                int sum = 0;
+                for (int j = 0; j < 3; j++)
+                {
+                    
+                    sum = arr[j, i] + sum;
+                }
+                Console.Write("{0} ", sum);
+
+            }
+        }
+    }
+}

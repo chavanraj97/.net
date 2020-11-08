@@ -1,0 +1,94 @@
+using System;
+namespace ConsoleApplicationDemo
+{
+    class Account
+    {
+        const float minBal = 1000;
+        static float interestRate = 0.07f;
+        static int getId;
+        int id;
+        string name;
+        double balance;
+        double interestReceived;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public double Balance
+        {
+            get { return balance; }
+            set { 
+                if(value+balance <= 1000 )
+                    throw new Exception("Invalid amount");
+                balance = value; 
+            }
+        }
+
+        static Account()
+        {
+            Console.WriteLine("Bank of India");
+            Console.WriteLine("Copyrights 2020");
+        }
+
+        public Account(string name, double balance)
+        {
+            id = ++getId;
+            Name = name;
+            Balance = balance;
+            
+        }
+
+        public void deposit(double amt)
+        {
+            if (amt <= 0)
+                throw new Exception ("Invalid amt");
+            else
+                balance = balance + amt;
+        }
+
+        public void withdraw(double amt)
+        {
+            if (amt <= 0)
+                Console.WriteLine("Invalid amt");
+            else if (balance - amt < minBal)
+                Console.WriteLine("Insufficient balance");
+            else
+                balance = balance - amt;
+        }
+        
+        public static double calculateInterest(Account obj)
+        {
+            double interest = obj.balance * interestRate;
+            obj.balance += interest;
+            obj.interestReceived = interest;
+            return interest;
+        }
+
+        public void display()
+        {
+            Console.WriteLine("id = {0}, name = {1}, balance = {2}, Interest = {3}", id, name, balance, interestReceived);
+        }
+
+    }
+    class Program //Entry point class
+    {
+        static void Main(string[] args)
+        {
+            Account a1 = new Account("Raj", 50000);
+            Account.calculateInterest(a1);
+            a1.display();
+            try
+            {
+                Account a2 = new Account("Nikhil", 500);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+            
+        }
+    }
+}

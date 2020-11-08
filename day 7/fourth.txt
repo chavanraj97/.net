@@ -1,0 +1,19 @@
+using System;
+namespace std
+{
+    
+    class Jagged
+    {
+
+        static void Main()
+        {
+            string str;
+            Console.WriteLine("Enter string");
+            str = Console.ReadLine();
+            string str2 = str.ToLower();
+            Console.WriteLine(str2);
+            Console.WriteLine(Object.ReferenceEquals(str, str2));
+        }
+    }
+}
+

@@ -1,0 +1,15 @@
+using System;
+using PracticeLib;
+namespace std
+{
+    class Jagged
+    {
+        static void Main()
+        {
+            Account[] a1 = { new Account("raj", 20000), new Account("nikhil", 30000) };
+            foreach (Account a in a1)
+                a.display();
+        }
+    }
+}
+

@@ -1,0 +1,39 @@
+using System;
+
+namespace std
+{
+    class User
+    {
+        string Password
+        {
+            get;
+            set;
+        }
+        public User(string pass)
+        {
+            Password = pass;
+        }
+        public bool login(string pass)
+        {
+            if (pass == Password)
+                return true;
+            else
+                return false;
+        }
+    }
+    class Jagged
+    {
+       
+        static void Main()
+        {
+            User u1 = new User("hithere");
+            Console.WriteLine("Enter password");
+            string pass = Console.ReadLine();
+            if (u1.login(pass))
+                Console.WriteLine("Welcome");
+            else
+                Console.WriteLine("Wrong password");
+        }
+    }
+}
+
