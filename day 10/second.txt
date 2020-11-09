@@ -1,0 +1,59 @@
+using System;
+namespace ConsoleApplication7
+{
+    class Person
+    {
+        public virtual string dojob()
+        {
+            return "doing job";
+        }
+    }
+
+    class Programmer : Person
+    {
+        public override string dojob()
+        {
+            return "coding";
+        }
+        public void testing()
+        {
+            Console.WriteLine("testing code also");
+        }
+    }
+
+    class Dancer : Person
+    {
+       
+    }
+
+    class Singer : Person
+    {
+        public override string dojob()
+        {
+            return "singing";
+        }
+    }
+
+    
+    class Program
+    {
+        static void Main(string[] args)//p[0] = new Programmer();
+            //p[1] = new Dancer();
+        {
+            Person[] p ={ new Programmer(), new Dancer(), new Singer() };
+
+            for (int i = 0; i < p.Length; i++)
+            {
+                Console.WriteLine(p[i].dojob());
+                if (p[i] is Programmer)
+                {
+                    Programmer p1 = (Programmer)p[i];
+                    p1.testing();
+                }
+            }
+        }
+    }
+    
+}
+
+

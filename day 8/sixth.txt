@@ -1,0 +1,32 @@
+using System;
+
+namespace std
+{
+    class Mymath
+    {
+        public static void avg(params int[] arr)
+        {
+            int sum = 0;
+            if (arr.Length == 0)
+                Console.WriteLine("Zero arguments not allowed");
+            else
+            {
+                foreach (int i in arr)
+                    sum += i;
+                Console.WriteLine(sum / arr.Length);
+            }
+        }
+    }
+    class MyClass
+    {
+       
+        static void Main()
+        {
+            int[] arr = new int[] { 10, 20};
+            Mymath.avg(arr);
+            Mymath.avg( new int[]{10, 30, 40});
+            Mymath.avg(new[] { 100, 200, 200, 100 });
+        }
+    }
+}
+

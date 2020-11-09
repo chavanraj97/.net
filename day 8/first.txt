@@ -1,0 +1,35 @@
+/*
+. Create a static class Mymeth having two static  method
+	1. public int sqr(int n) :this method return square of a number
+	2. public double sqr(double s): this method return square of a number
+Create a entry point class and call this method.
+
+*/
+
+using System;
+
+namespace std
+{
+    class Mymeth
+    {
+        public static int sqr(int n)
+        {
+            return n * n;
+        }
+        public static double sqr(double d)
+        {
+            return d * d;
+        }
+
+    }
+    class MyClass
+    {
+       
+        static void Main()
+        {
+            Console.WriteLine(Mymeth.sqr(10));
+            Console.WriteLine(Mymeth.sqr(10.2));
+        }
+    }
+}
+

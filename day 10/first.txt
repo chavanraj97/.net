@@ -1,0 +1,132 @@
+using System;
+namespace ConsoleApplication7
+{
+    abstract class Account
+    {
+
+        static int getId;
+        int id;
+        string name;
+        double balanceAmt;
+
+        static Account()
+        {
+            Console.WriteLine("Bank of Taida");
+        }
+
+        public Account(string name, double balanceAmt)
+        {
+            if (balanceAmt < 1000)
+                throw new Exception("minimum 1000Rs required to open an account");
+            id = ++getId;
+            this.Name = name;
+            this.BalanceAmt = balanceAmt;
+        }
+
+
+        public int Id
+        {
+            get { return id; }
+        }
+        protected double BalanceAmt
+        {
+            get { return balanceAmt; }
+            set { balanceAmt = value; }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (value.Length > 15)
+                {
+                    throw new Exception("name should not be more than 15 characters");
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
+        object o1 = new object();
+        public void deposit(double amt)
+        {
+            this.balanceAmt = amt + this.balanceAmt;
+        }
+        public abstract void withdraw(double amt);
+
+        public override string ToString()
+        {
+            return string.Format("id={0},name={1},bal={2}", id, name, balanceAmt);
+        }
+    }
+
+
+    class Saving : Account
+    {
+
+        const int minBal = 1000;
+
+        public Saving(string name, double balance)
+            : base(name, balance)
+        {
+
+        }
+
+        public override void withdraw(double amt)
+        {
+            if (BalanceAmt - amt >= minBal)
+                this.BalanceAmt = this.BalanceAmt - amt;
+            else
+                throw new Exception("Not sufficient balance");
+        }
+    }
+
+
+    class Current : Account
+    {
+        public Current(string name, double balance)
+            : base(name, balance)
+        {
+
+        }
+        public override void withdraw(double amt)
+        {
+            this.BalanceAmt = this.BalanceAmt - amt;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Account[] a1 = new Account[3];
+            a1[0] = new Current("Raj", 20000);
+            // a1[0] = new Current("Raj",100);
+            // exception to open an account you have to have 1000rs
+            a1[1] = new Saving("Aditya", 10000);
+            a1[2] = new Saving("Geeta", 30000);
+
+            a1[0].withdraw(20000);// allowed coz minimum balance can be anything
+            a1[0].deposit(20000);
+
+            try
+            {
+                a1[1].withdraw(10000);// Exception coz balance should not be less than 1000
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            foreach (Account e in a1)
+                Console.WriteLine(e.ToString());
+
+            
+        }
+    }
+
+}
+
+
