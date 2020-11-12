@@ -1,0 +1,82 @@
+using System;
+using System.IO;
+namespace ConsoleApplication7
+{
+    class Student
+    {
+        int id;
+        string name;
+        double marks;
+
+        public Student(int id, string name, double marks)
+        {
+            this.id = id;
+            this.name = name;
+            this.marks = marks;
+        }
+
+        public void give_graceMarks(int mks)
+        {
+            if (mks > 5)
+                throw new MyException(this.id, this.name, this.marks);
+            else
+                this.marks = this.marks + mks;
+        }
+    }
+
+    class MyException : ApplicationException
+    {
+        readonly int id;
+        readonly string name;
+        readonly double marks;
+
+        public MyException(int id, string name, double marks)
+        {
+            
+            this.id = id;
+            this.name = name;
+            this.marks = marks;
+            try
+            {
+                FileStream fos = new FileStream("abc.txt", FileMode.Append);
+                StreamWriter sw = new StreamWriter(fos);
+
+                sw.WriteLine("id={0}, name={1}", id, name);
+                sw.Flush();
+
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+
+    }
+
+
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+
+            Student s1 = new Student(1, "raj", 80);
+            try
+            {
+                s1.give_graceMarks(6);
+            }
+            catch (MyException e)
+            {
+                Console.WriteLine("Grace marks should be less than 5");
+            }
+
+        }
+    }
+
+
+
+
+}
+
+

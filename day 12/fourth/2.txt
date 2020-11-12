@@ -1,0 +1,43 @@
+namespace ConsoleApplication7
+{
+    class Account
+    {
+        static Account()
+        {
+            Console.WriteLine("Bank of Taida");
+        }
+
+        public Account(string name, double balanceAmt)
+        {
+            if (balanceAmt < 1000)
+                throw new Exception("minimum 1000Rs required to open an account");
+            id = ++getId;
+            this.Name = name;
+            this.BalanceAmt = balanceAmt;
+        }
+        public int Id
+        {
+            get { return id; }
+        }
+        protected double BalanceAmt
+        {
+            get { return balanceAmt; }
+            set { balanceAmt = value; }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (value.Length > 15)
+                {
+                    throw new Exception("name should not be more than 15 characters");
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
+    }
+}

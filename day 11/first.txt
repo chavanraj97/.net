@@ -1,0 +1,155 @@
+using System;
+namespace ConsoleApplication7
+{
+
+    class Message
+    {
+        public void mobile(double amt, double bal, string name)
+        {
+            Console.WriteLine("Mobile: AmtWithdrawn={0},Balance:{1},Name:{2} ",amt, bal,name );
+        }
+        public void email(double amt, double bal, string name)
+        {
+            Console.WriteLine("Email: AmtWithdrawn={0},Balance:{1},Name:{2} ", amt, bal, name);
+        }
+    }
+
+    delegate void wd(double x, double bal, string nm);
+
+    abstract class Account
+    {
+        public event wd wdEvent;
+        public void onWithdraw(double a, double bal, string name)
+        {
+            if (wdEvent != null)
+            {
+                wdEvent(a, bal, name);
+            }
+        }
+        static int getId;
+        int id;
+        string name;
+        double balanceAmt;
+
+        static Account()
+        {
+            Console.WriteLine("Bank of Taida");
+        }
+
+        public Account(string name, double balanceAmt)
+        {
+            if (balanceAmt < 1000)
+                throw new Exception("minimum 1000Rs required to open an account");
+            id = ++getId;
+            this.Name = name;
+            this.BalanceAmt = balanceAmt;
+        }
+
+
+        public int Id
+        {
+            get { return id; }
+        }
+        protected double BalanceAmt
+        {
+            get { return balanceAmt; }
+            set { balanceAmt = value; }
+        }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                if (value.Length > 15)
+                {
+                    throw new Exception("name should not be more than 15 characters");
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
+        object o1 = new object();
+        public void deposit(double amt)
+        {
+            this.balanceAmt = amt + this.balanceAmt;
+        }
+        public abstract void withdraw(double amt);
+
+        public override string ToString()
+        {
+            return string.Format("id={0},name={1},bal={2}", id, name, balanceAmt);
+        }
+    }
+
+
+    class Saving : Account
+    {
+
+        const int minBal = 1000;
+
+        public Saving(string name, double balance)
+            : base(name, balance)
+        {
+
+        }
+
+        public override void withdraw(double amt)
+        {
+            if (BalanceAmt - amt >= minBal)
+            {
+                this.BalanceAmt = this.BalanceAmt - amt;
+                onWithdraw(amt, BalanceAmt, Name);
+            }
+
+            else
+                throw new Exception("Not sufficient balance");
+        }
+    }
+
+
+    class Current : Account
+    {
+        public Current(string name, double balance)
+            : base(name, balance)
+        {
+
+        }
+        public override void withdraw(double amt)
+        {
+            this.BalanceAmt = this.BalanceAmt - amt;
+            onWithdraw(amt, BalanceAmt, Name);
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Message m = new Message();
+            Account[] a1 = new Account[3];
+            a1[0] = new Current("Raj", 20000);
+            // a1[0] = new Current("Raj",100);
+            // exception to open an account you have to have 1000rs
+            a1[1] = new Saving("Aditya", 10000);
+            a1[2] = new Saving("Geeta", 30000);
+
+            for (int i = 0; i < a1.Length; i++)
+            {
+                a1[i].wdEvent += m.email;
+                a1[i].wdEvent += m.mobile;
+            }
+
+            a1[0].withdraw(10000);
+            a1[0].deposit(20000);
+
+           
+
+        }
+    }
+
+}
+
+

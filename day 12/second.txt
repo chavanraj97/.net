@@ -1,0 +1,40 @@
+using System;
+using System.IO;
+namespace ConsoleApplication7
+{
+    delegate int deg(int no);
+    static class MyClass
+    {
+        
+    }
+    class Program
+    {
+        
+        static void Main(string[] args)
+        {
+
+            deg d1 = no =>	// statements
+            {
+                
+                int temp = 1;
+                for (int i = 2; i <= no; i++)
+                    temp = temp * i;
+                return temp;
+            };
+
+            deg d2 = no => no * no;	// expression
+
+            deg d3 = no => no * no * no;
+
+            Console.WriteLine(d1(4));
+            Console.WriteLine(d2(4));
+            Console.WriteLine(d3(4));
+        }
+    }
+
+  
+  
+
+}
+
+

@@ -1,0 +1,42 @@
+using System;
+namespace ConsoleApplication7
+{
+    delegate int Deg(int no);
+    class MyClass
+    {
+        public int fact(int no)
+        {
+            int fact=1;
+            for (int i = 1; i <= no; i++)
+            {
+                fact = fact * i;
+            }
+            return fact;
+        }
+        public int sqr(int no)
+        {
+            return no * no * no;
+        }
+        public int cube(int no)
+        {
+            return no * no * no;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MyClass m1 = new MyClass();
+            Deg sqr = new Deg(m1.sqr);
+            Deg cube = new Deg(m1.cube);
+            Deg fact = new Deg(m1.fact);
+
+            Console.WriteLine(sqr(10));
+            Console.WriteLine(cube(4));
+            Console.WriteLine(fact(5));
+        }
+    }
+
+}
+
+

@@ -1,0 +1,39 @@
+using System;
+using System.IO;
+namespace ConsoleApplication7
+{
+    delegate int deg(int no);
+    class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Salary { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("id={0},name={1},salary{2}", Id, Name, Salary);
+
+        }
+    }
+    class Program
+    {
+        
+        static void Main(string[] args)
+        {
+
+            var e1 = new Employee { Id = 1, Name = "raj", Salary = 20000 };
+            Object o1 = new Employee { Id = 2, Name = "Nikhil", Salary = 30000 };
+            dynamic d1 = new Employee { Id = 3, Name = "Priya", Salary = 40000 };
+
+            Console.WriteLine(e1);
+            Console.WriteLine(o1);
+            Console.WriteLine(d1);
+        }
+    }
+
+  
+  
+
+}
+
+

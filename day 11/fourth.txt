@@ -1,0 +1,84 @@
+using System;
+namespace ConsoleApplication7
+{
+    delegate void Bonus(double sal, double bon, string name);
+    class Message
+    {
+        public void mobile(double sal, double bon, string name)
+        {
+            Console.WriteLine("Mobile:Sal={0},Bal={1},Name={2}", sal, bon, name);
+        }
+        public void email(double sal, double bon, string name)
+        {
+            Console.WriteLine("Email:Sal={0},Bal={1},Name={2}", sal, bon, name);
+        }
+    }
+    abstract class Employee
+    {
+        
+        public event Bonus bonusEvent;
+        public void subBonus(double sal, double bon, string name)
+        {
+            if (bonusEvent != null)
+                bonusEvent(sal, bon, name);
+        }
+        static int getId;
+        int id;
+        string name;
+        double salary;
+
+        public string Name { get { return name; } set { name = value; } }
+        public double Salary { get { return salary; } set { salary = value; } }
+
+
+        public Employee(string name, double salary)
+        {
+            id = ++getId;
+            this.name = name;
+            this.salary = salary;
+        }
+
+        public abstract void giveBonus(double bonus);
+    }
+    class Permanent : Employee
+    {
+        public Permanent(string name, double salary):base(name, salary)
+        {
+            
+        }
+        public override void giveBonus(double bonus)
+        {
+            this.Salary = this.Salary + bonus;
+            Console.WriteLine(Name);
+            subBonus(Salary, bonus, Name);
+            
+        }
+    }
+    class Temporary : Employee
+    {
+        public Temporary(string name, double salary):base(name, salary)
+        {
+            
+        }
+        public override void giveBonus(double bonus)
+        {
+            this.Salary = this.Salary + bonus;
+            subBonus(Salary, bonus, Name);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Message m1 = new Message();
+            Employee e1 = new Temporary("Raj", 20000);
+            e1.bonusEvent += m1.mobile;
+            e1.bonusEvent += m1.email;
+
+            e1.giveBonus(1000);
+        }
+    }
+
+}
+
+
